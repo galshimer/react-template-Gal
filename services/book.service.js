@@ -2,15 +2,16 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
-var gFilterBy = { id: '', title: '', listPrice: 0 }
-_createBooks()
+var gFilterBy = { title: '', listPrice: 0 }
+
+var gNextId = 1
 
 export const bookService = {
     query,
     get,
     remove,
     save,
-    getEmptyBook,
+    // getEmptyBook,
     // getNextBookId,
     // getFilterBy,
     setFilterBy,
@@ -48,7 +49,7 @@ function save(book) {
 }
 
 function getEmptyBook(title = '', listPrice = 0) {
-    return { id: '', title, listPrice}
+    return {title, listPrice }
 }
 
 // function getFilterBy() {
@@ -56,7 +57,7 @@ function getEmptyBook(title = '', listPrice = 0) {
 // }
 
 function setFilterBy(filterBy = {}) {
-    if (filterBy.txt !== undefined) gFilterBy.id = filterBy.id
+    if (filterBy.id !== undefined) gFilterBy.id = filterBy.id
     if (filterBy.title !== undefined) gFilterBy.title = filterBy.title
     if (filterBy.listPrice !== undefined) gFilterBy.listPrice = filterBy.listPrice
     return gFilterBy
@@ -82,14 +83,16 @@ function _createBooks() {
     }
 }
 
-function _createBook( title, listPrice) {
-    const book = getEmptyBook(title, listPrice)
-    book.id = utilService.makeId()
-    return book
+function _createBook(title, listPrice) {
+    console.log(gNextId)
+    return {id: gNextId++,
+            thumbnail: `http://coding-academy.org/books-photos/${gNextId}.jpg`,
+            title, listPrice}
 }
 
-function getDefaultFilter(){
+function getDefaultFilter() {
     return gFilterBy
 }
 
+_createBooks()
 
