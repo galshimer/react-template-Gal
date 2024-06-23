@@ -4,7 +4,7 @@ export function App() {
     return (
         <section className="app">
             <header className="app-header">
-                <h1>My App</h1>
+                <h1>Gal's App</h1>
             </header>
             <main class="container">
                 <Home />
